@@ -1,70 +1,68 @@
-$(function() {
-	"use strict"
+$(function () {
+  "use strict"
 
-	//Fixed
-   var header = $("#header");
-   var intro = $("#intro");
-   var introHeight = intro.innerHeight();
-   var scrollPos = $(window).scrollTop();
+  //Fixed
+  var header = $("#header")
+  var intro = $("#intro")
+  var introHeight = intro.innerHeight()
+  var scrollPos = $(window).scrollTop()
 
-   checkScroll(scrollPos, introHeight);
+  checkScroll(scrollPos, introHeight)
 
-	$(window).on("scroll resize", function() {
-		
-			introHeight = intro.innerHeight();
-			scrollPos = $(this).scrollTop();
+  $(window).on("scroll resize", function () {
+    introHeight = intro.innerHeight()
+    scrollPos = $(this).scrollTop()
 
-			checkScroll(scrollPos, introHeight);
-		
-	});
+    checkScroll(scrollPos, introHeight)
+  })
 
-	function checkScroll (scrollPos, introHeight) {
+  function checkScroll(scrollPos, introHeight) {
+    if (scrollPos > introHeight) {
+      header.addClass("fixed")
+    } else {
+      header.removeClass("fixed")
+    }
+  }
 
-			if(scrollPos > introHeight) {
+  //Smooth scroll
+  $("[data-scroll]").on("click", function (event) {
+    event.preventDefault()
 
-				header.addClass("fixed");
-			}
-			else {
-				header.removeClass("fixed");
-			}
-	}
+    var elementId = $(this).data("scroll")
+    var elementOfSet = $(elementId).offset().top
 
+    nav.removeClass("show")
 
-	//Smooth scroll
-	$('[data-scroll]').on("click", function (event) {
-		event.preventDefault();
+    $("html, body").animate(
+      {
+        scrollTop: elementOfSet - 39,
+      },
+      800,
+    )
+  })
 
-		var elementId = $(this).data('scroll');
-		var elementOfSet = $(elementId).offset().top;
+  //NavMenu
+  var nav = $("#nav")
+  var navMenu = $("#navMenu")
 
-		nav.removeClass('show');
+  navMenu.on("click", function (event) {
+    event.preventDefault()
+    console.log(event.preventDefault())
 
-		$("html, body").animate({
-			scrollTop: elementOfSet - 39
-		},	800)
-	});
+    nav.toggleClass("show")
+  })
 
-	//NavMenu
-	var nav = $('#nav');
-	var navMenu = $('#navMenu');
+ 
 
-	navMenu.on('click', function(event) {
-		event.preventDefault();
-		
-		nav.toggleClass('show');
+  //Reviews
 
-	});
-
-	//Reviews
-
-	var slider = $('#reviewsSlider')
-	slider.slick({
-		infinite: true,
-	 	slidesToScroll: 1,
-	 	slidesToShow: 1,
-	 	fade: true,
-	 	arrows: false,
-	 	dots: true
-	});
-
-});
+  var slider = $("#reviewsSlider")
+  slider.slick({
+    infinite: true,
+    slidesToScroll: 1,
+    slidesToShow: 1,
+    fade: true,
+    arrows: false,
+    dots: true,
+  })
+})
